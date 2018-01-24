@@ -6,11 +6,18 @@ feature 'Creating links' do
     fill_in 'title', with: 'This is Zombocom'
     click_button 'Create link'
 
-    # we expect to be redirected back to the links page
-    expect(current_path).to eq '/links'
-
-    within 'ul#links' do
-      expect(page).to have_content('This is Zombocom')
-    end
+    expect(page).to have_content('This is Zombocom')
   end
+
+  scenario 'I can add a specific tag to a new link' do
+    visit '/links/new'
+    fill_in 'url',   with: 'http://www.bbc.co.uk'
+    fill_in 'title', with: 'This is BBC'
+    fill_in 'tags', with: 'News'
+
+    click_button 'Create link'
+    link = Link.first
+    expect(link.tags.map(&:name)).to include('News')
+  end
+
 end

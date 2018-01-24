@@ -1,9 +1,7 @@
-<h1> Links </h1>
-
   <% @links.each do |link| %>
     <li>
       Title: <%= link.title %>
       Link: <%= link.url %>
-      Tag: <%= link.tags %>
+      Tag:  <%= link.tags.map(&:name).join(",") %>
     </li>
   <% end %>
